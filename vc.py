@@ -1,0 +1,34 @@
+import whisper_mic
+from llama_cpp import Llama
+
+llm = Llama(model_path="models/.gguf")
+history = []
+
+def transcribe_audio():
+  print("話してください...")
+  result = whisper_mic.transcribe()
+  text = result["text"]
+  print(">>>", text)
+  return text
+
+def chat_with_llama(text):
+  history.append({"role": "user", "content": text})
+  output = llm.create_chat_completion(
+    messages=history,
+    max_tokens=100
+  )
+  response = output["choices"][0]["message"]["content"]
+  history.append({"role": "assistant", "content": response})
+  print(response)
+  return response
+
+def main():
+  while True:
+    text = transcribe_audio()
+    if text.lower() in ["exit", "quit", "終了"]:
+      print("終了します。")
+      break
+    response = chat_with_llama(text)
+
+if __name__ == "__main__":
+  main()
