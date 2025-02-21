@@ -4,13 +4,13 @@ import settings
 from error_hider import noalsaerr
 
 llm = Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
-with noalsaerr():
-  mic = WhisperMic(model="medium")
+mic = WhisperMic(model="medium")
 history = [{"role": "system", "content": "You are helpful assistant."}]
 
 def transcribe_audio():
   print("話してください...")
-  result = mic.listen()
+  with noalsaerr():
+    result = mic.listen()
   #text = result["text"]
   print(">>>", result)
   return result
