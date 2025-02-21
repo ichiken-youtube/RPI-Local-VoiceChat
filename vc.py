@@ -2,12 +2,11 @@ from whisper_mic import WhisperMic
 from llama_cpp import Llama
 import settings
 import os
-import sys
 import contextlib
+import subprocess
 
 llm = Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
-with contextlib.redirect_stdout(open(os.devnull, 'w')):
-  mic = WhisperMic(model="medium")
+mic = WhisperMic(model="medium")
 history = [{"role": "system", "content": "You are helpful assistant."}]
 
 @contextlib.contextmanager
@@ -35,6 +34,28 @@ def suppress_output():
     os.close(null_fd)
     os.close(save_stdout_fd)
     os.close(save_stderr_fd)
+
+#https://nekonogorogoro.com/raspberrypi_openjtalk_python/
+def speack_ojtalk(text, voice="f"):
+  open_jtalk = ['open_jtalk']
+  mecab_dict = ['-x','/var/lib/mecab/dic/open-jtalk/naist-jdic']
+  if voice == "f":
+    # 女性音声
+    htsvoice = ['-m','/usr/share/hts-voice/mei/mei_normal.htsvoice']
+  else:
+    # 男性音声
+    htsvoice = ['-m','/usr/share/hts-voice/nitech-jp-atr503-m001/nitech_jp_atr503_m001.htsvoice']
+  # 音声スピード
+  speed = ['-r','1.0']
+  outwav = ['-ow','test.wav']
+  cmd = open_jtalk+mecab_dict+htsvoice+speed+outwav
+  c = subprocess.Popen(cmd,stdin=subprocess.PIPE)
+  c.stdin.write(text.encode('utf-8'))
+  c.stdin.close()
+  c.wait()
+  aplay = ['aplay','-q','test.wav','-Dhw:1,0']
+  wr = subprocess.Popen(aplay)
+
 
 def transcribe_audio():
   print("\n\n話してください...")
@@ -65,6 +86,7 @@ def main():
       print("終了します。")
       break
     response = chat_with_llama(text)
+    speack_ojtalk(response, voice="f")
 
 if __name__ == "__main__":
   main()
