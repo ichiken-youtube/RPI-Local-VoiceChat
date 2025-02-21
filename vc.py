@@ -38,10 +38,10 @@ def suppress_output():
     os.close(save_stderr_fd)
 
 def transcribe_audio():
-  print("話してください...")
+  print("\n\n話してください...")
   #with suppress_stdout(): #noalsaerr():
-  print("koreha hyoujisareanai hazu")
   with suppress_output():
+    print("これは表示されないはず")
     result = mic.listen()
 
   #text = result["text"]
