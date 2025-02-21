@@ -1,14 +1,14 @@
-#rom whisper_mic import WhisperMic
+from whisper_mic import WhisperMic
 from llama_cpp import Llama
 import settings
 
 llm = Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
-#mic = WhisperMic(model="medium")
+mic = WhisperMic(model="medium")
 history = [{"role": "system", "content": "You are helpful assistant."}]
 
 def transcribe_audio():
   print("話してください...")
-  result = input()#mic.listen()
+  result = mic.listen()
   #text = result["text"]
   print(">>>", result)
   return result
