@@ -3,12 +3,12 @@ from llama_cpp import Llama
 import settings
 
 llm = Llama(settings.MODEL_PATH)
-mic = WhisperMic(model="medium")
+#mic = WhisperMic(model="medium")
 history = []
 
 def transcribe_audio():
   print("話してください...")
-  result = mic.listen()
+  result = input()#mic.listen()
   #text = result["text"]
   print(">>>", result)
   return result
