@@ -13,28 +13,34 @@ history = [{"role": "system", "content": "You are helpful assistant."}]
 
 @contextlib.contextmanager
 def suppress_output():
-  # os.devnullをファイルディスクリプタとして開く
-  devnull_fd = os.open(os.devnull, os.O_WRONLY)
-  
-  # 標準出力と標準エラーをos.devnullにリダイレクト
-  old_stdout_fd = sys.stdout.fileno()
-  old_stderr_fd = sys.stderr.fileno()
-  
-  os.dup2(devnull_fd, old_stdout_fd)
-  os.dup2(devnull_fd, old_stderr_fd)
+  # /dev/nullをファイルディスクリプタとして開く
+  null_fd = os.open(os.devnull, os.O_RDWR)
+    
+  # 現在の標準出力と標準エラー出力のファイルディスクリプタを保存
+  save_stdout_fd = os.dup(1)  # 1は標準出力
+  save_stderr_fd = os.dup(2)  # 2は標準エラー出力
+    
+  # 標準出力と標準エラー出力を/dev/nullにリダイレクト
+  os.dup2(null_fd, 1)  # 標準出力を/dev/nullにリダイレクト
+  os.dup2(null_fd, 2)  # 標準エラー出力を/dev/nullにリダイレクト
   
   try:
     # リダイレクトされた状態で処理を実行
     yield
   finally:
-    # リダイレクトを元に戻す
-    os.dup2(old_stdout_fd, sys.stdout.fileno())
-    os.dup2(old_stderr_fd, sys.stderr.fileno())
-    os.close(devnull_fd)
+    # 標準出力と標準エラー出力を元に戻す
+    os.dup2(save_stdout_fd, 1)
+    os.dup2(save_stderr_fd, 2)
+    
+    # 使用したファイルディスクリプタを閉じる
+    os.close(null_fd)
+    os.close(save_stdout_fd)
+    os.close(save_stderr_fd)
 
 def transcribe_audio():
   print("話してください...")
   #with suppress_stdout(): #noalsaerr():
+  print("koreha hyoujisareanai hazu")
   with suppress_output():
     result = mic.listen()
 
