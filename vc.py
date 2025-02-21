@@ -1,4 +1,4 @@
-from whisper_mic import WhisperMic
+#rom whisper_mic import WhisperMic
 from llama_cpp import Llama
 import settings
 
@@ -17,7 +17,7 @@ def chat_with_llama(text):
   history.append({"role": "user", "content": text})
   output = llm.create_chat_completion(
     messages=history,
-    max_tokens=100
+    max_tokens=256
   )
   response = output["choices"][0]["message"]["content"]
   history.append({"role": "assistant", "content": response})
