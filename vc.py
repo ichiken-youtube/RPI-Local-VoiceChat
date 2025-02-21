@@ -1,7 +1,8 @@
 import whisper_mic
 from llama_cpp import Llama
+import settings
 
-llm = Llama(model_path="models/.gguf")
+llm = Llama(settings.MODEL_PATH)
 history = []
 
 def transcribe_audio():
