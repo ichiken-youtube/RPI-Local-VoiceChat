@@ -4,7 +4,7 @@ import settings
 
 llm = Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
 #mic = WhisperMic(model="medium")
-history = []
+history = [{"role": "system", "content": "You are helpful assistant."}]
 
 def transcribe_audio():
   print("話してください...")
