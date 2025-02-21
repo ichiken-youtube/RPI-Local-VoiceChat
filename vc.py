@@ -2,7 +2,7 @@
 from llama_cpp import Llama
 import settings
 
-llm = Llama(settings.MODEL_PATH)
+llm = Llama(settings.MODEL_PATH,n_gpu_layers=24)
 #mic = WhisperMic(model="medium")
 history = []
 
