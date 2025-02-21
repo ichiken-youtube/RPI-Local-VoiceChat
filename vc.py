@@ -1,7 +1,6 @@
 from whisper_mic import WhisperMic
 from llama_cpp import Llama
 import settings
-from error_hider import noalsaerr
 import os
 import sys
 import contextlib
