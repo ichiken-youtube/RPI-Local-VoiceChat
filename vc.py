@@ -1,16 +1,17 @@
-import whisper_mic
+from whisper_mic import WhisperMic
 from llama_cpp import Llama
 import settings
 
 llm = Llama(settings.MODEL_PATH)
+mic = WhisperMic(model="medium")
 history = []
 
 def transcribe_audio():
   print("話してください...")
-  result = whisper_mic.transcribe()
-  text = result["text"]
-  print(">>>", text)
-  return text
+  result = mic.listen()
+  #text = result["text"]
+  print(">>>", result)
+  return result
 
 def chat_with_llama(text):
   history.append({"role": "user", "content": text})
