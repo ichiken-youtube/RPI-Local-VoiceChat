@@ -1,9 +1,11 @@
 from whisper_mic import WhisperMic
 from llama_cpp import Llama
 import settings
+from error_hider import noalsaerr
 
 llm = Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
-mic = WhisperMic(model="medium")
+with noalsaerr():
+  mic = WhisperMic(model="medium")
 history = [{"role": "system", "content": "You are helpful assistant."}]
 
 def transcribe_audio():
