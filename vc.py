@@ -100,7 +100,8 @@ def main():
 
     response = chat_with_llama(text)
     for line in re.split('[。\n]', response):
-      speack_ojtalk(line, voice=settings.VOICE)
+      if line != '':
+        speack_ojtalk(line, voice=settings.VOICE)
     print("\r発話中...完了")
 
 if __name__ == "__main__":
