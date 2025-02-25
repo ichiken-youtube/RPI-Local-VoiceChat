@@ -18,7 +18,7 @@ history = [{"role": "system", "content": "あなたはRaspberry Piの上で動�
 音声認識の都合上、文字が誤認される場合がありますが、コマンドを解釈するうえで読みが似ている場合、また、意味が近い語は同一と解釈してください。\
 状態は0,1のみ入力可能です。0がオフ、1がオンです。\
 操作をする場合は、コマンドのみを生成して他の文は生成しないでください。\
-実行が完了したのち、システムあから返ってくるメッセージの内容によって、成功/不成功を報告してください。"}]
+実行が完了したのち、システムあから返ってくるメッセージの内容を判断して、成功/不成功を日本語の文章として報告してください。"}]
 
 pin_outA = gpiozero.DigitalOutputDevice(pin=20)
 pin_outB = gpiozero.DigitalOutputDevice(pin=21)
@@ -51,6 +51,8 @@ def suppress_output():
 
 #https://nekonogorogoro.com/raspberrypi_openjtalk_python/
 def speack_ojtalk(text, voice="f"):
+  if text == "": 
+    return
   open_jtalk = ['open_jtalk']
   mecab_dict = ['-x','/var/lib/mecab/dic/open-jtalk/naist-jdic']
   if voice == "f":
