@@ -89,7 +89,8 @@ def main():
       print("終了します。")
       break
     response = chat_with_llama(text)
-    speack_ojtalk(response, voice=settings.VOICE)
+    for line in response.splitlines():
+      speack_ojtalk(line, voice=settings.VOICE)
 
 if __name__ == "__main__":
   main()
