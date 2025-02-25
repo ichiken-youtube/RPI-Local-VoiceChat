@@ -65,10 +65,9 @@ def speack_ojtalk(text, voice="f"):
   guruguru = ['/','-','\\']
   cnt = 0
   while process.poll() is None:
-    print("\r発話中...{%d}"%guruguru[cnt%3],end='')
+    print("\r発話中...%s"%guruguru[cnt%3],end='')
     time.sleep(1)
     cnt+=1
-  print("\r発話中...完了")
 
 
 def transcribe_audio():
@@ -103,6 +102,7 @@ def main():
     response = chat_with_llama(text)
     for line in response.splitlines():
       speack_ojtalk(line, voice=settings.VOICE)
+    print("\r発話中...完了")
 
 if __name__ == "__main__":
   main()
