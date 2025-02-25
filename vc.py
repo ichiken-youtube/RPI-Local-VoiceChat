@@ -9,7 +9,7 @@ import time
 import gpiozero
 
 llm = Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
-mic = WhisperMic(model="medium")
+mic = WhisperMic(model="base")
 history = [{"role": "system", "content": "あなたはRaspberry Piの上で動作してるスマートホームアシスタントです。\
 あなたはGPIOを制御することができます。ユーザから要求があった場合は、制御を実行します。\
 コマンドを生成することで、GPIOが制御されます。コマンドは以下の構文です。\
