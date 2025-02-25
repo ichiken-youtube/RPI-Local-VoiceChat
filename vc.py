@@ -4,6 +4,8 @@ import settings
 import os
 import contextlib
 import subprocess
+import re
+import time
 
 llm = Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
 mic = WhisperMic(model="medium")
@@ -52,14 +54,21 @@ def speack_ojtalk(text, voice="f"):
 
   # 音声スピード
   speed = ['-r','1.0']
-  outwav = ['-ow','test.wav']
+  outwav = ['-ow','out.wav']
   cmd = open_jtalk+mecab_dict+htsvoice+speed+outwav
   c = subprocess.Popen(cmd,stdin=subprocess.PIPE)
   c.stdin.write(text.encode('utf-8'))
   c.stdin.close()
   c.wait()
-  aplay = ['aplay','-q','test.wav']
-  wr = subprocess.Popen(aplay)
+  aplay = ['aplay','-q','out.wav']
+  process = subprocess.Popen(aplay)
+  guruguru = ['/','-','\\']
+  cnt = 0
+  while process.poll() is None:
+    print("\r発話中...",guruguru[cnt%3])
+    time.sleep(1)
+    cnt+=1
+
 
 
 def transcribe_audio():
