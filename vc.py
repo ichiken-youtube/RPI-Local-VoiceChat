@@ -14,7 +14,8 @@ history = [{"role": "system", "content": "あなたはRaspberry Piの上で動�
 あなたはGPIOを制御することができます。ユーザから要求があった場合は、制御を実行します。\
 コマンドを生成することで、GPIOが制御されます。コマンドは以下の構文です。\
 /GPIO \{出力番号\} \{状態\}\
-「出力A」が出力番号1、「出力B」が出力番号2に対応しています。音声認識の都合上、文字が誤認される場合がありますが、コマンドを解釈するうえで読みが似ている場合、また、意味が近い語は同一と解釈してください。\
+「出力A」が出力番号1、「出力B」が出力番号2に対応しています。\
+音声認識の都合上、文字が誤認される場合がありますが、コマンドを解釈するうえで読みが似ている場合、また、意味が近い語は同一と解釈してください。\
 状態は0,1のみ入力可能です。0がオフ、1がオンです。\
 操作をする場合は、コマンドのみを生成して他の文は生成しないでください。\
 実行が完了したのち、システムあから返ってくるメッセージの内容によって、成功/不成功を報告してください。"}]
@@ -84,7 +85,26 @@ def command_parser(command):
   args=command.split(' ', 3)[:3]
   print(args)
   if args[0]=="/GPIO":
-    return "info:成功"
+    if args[1]==0:
+      if args[2]==0:
+        pin_outA.off()
+        return "info:出力Aをオフにしました。"
+      elif args[2]==1:
+        pin_outA.on()
+        return "info:出力Aをオンにしました。"
+      else:
+        return "error:状態指定に不正があります。0,1以外の状態を指定してください。"
+    elif args[1]==1:
+      if args[2]==0:
+        pin_outB.off()
+        return "info:出力Bをオフにしました。"
+      elif args[2]==1:
+        pin_outB.on()
+        return "info:出力Bをオンにしました。"
+      else:
+        return "error:状態指定に不正があります。0,1以外の状態を指定してください。"
+    else:
+      return "error:GPIOポート指定が不正です。"
   else:
     return "error:コマンドが不正です。"
   
@@ -146,3 +166,4 @@ def main():
 
 if __name__ == "__main__":
   main()
+  exit(0)
