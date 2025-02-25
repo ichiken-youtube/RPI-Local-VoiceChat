@@ -9,7 +9,7 @@ import time
 
 llm = Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
 mic = WhisperMic(model="medium")
-history = [{"role": "system", "content": "You are helpful assistant."}]
+history = [{"role": "system", "content": "あなたはRaspberry Piの上で動作してるスマートホームアシスタントです。GPIOを制御することができます。ユーザから要求があった場合は、制御を実行します。"}]
 
 @contextlib.contextmanager
 def suppress_output():
