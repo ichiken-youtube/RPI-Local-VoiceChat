@@ -11,8 +11,13 @@ import gpiozero
 llm = Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
 mic = WhisperMic(model="medium")
 history = [{"role": "system", "content": "あなたはRaspberry Piの上で動作してるスマートホームアシスタントです。\
-            GPIOを制御することができます。ユーザから要求があった場合は、制御を実行します。\
-            実行が完了したのち、システムあから返ってくるメッセージの内容によって、成功/不成功を報告してください。"}]
+あなたはGPIOを制御することができます。ユーザから要求があった場合は、制御を実行します。\
+コマンドを生成することで、GPIOが制御されます。コマンドは以下の構文です。\
+/GPIO \{出力番号\} \{状態\}\
+「出力A」が出力番号1、「出力B」が出力番号2に対応しています。音声認識の都合上、文字が誤認される場合がありますが、読みが似ている場合は同一と解釈してください。\
+状態は0,1のみ入力可能です。0がオフ、1がオンです。\
+操作をする場合は、コマンドのみを生成して他の文は生成しないでください。\
+実行が完了したのち、システムあから返ってくるメッセージの内容によって、成功/不成功を報告してください。"}]
 
 pin_outA = gpiozero.DigitalOutputDevice(pin=20)
 pin_outB = gpiozero.DigitalOutputDevice(pin=21)
@@ -75,6 +80,14 @@ def speack_ojtalk(text, voice="f"):
     time.sleep(1)
     cnt+=1
 
+def command_parser(command):
+  args=command.split(' ', 3)[:2]
+  print(args)
+  if args[0]=="/GPIO":
+    pass
+  else:
+    return "error:コマンドが不正です。"
+  
 
 def transcribe_audio():
   print("\n\n話してください...")
@@ -86,7 +99,7 @@ def transcribe_audio():
   print(">>>", result)
   return result
 
-def chat_with_llama(text):
+def chat_with_llama(text,role='user'):
   history.append({"role": "user", "content": text})
   output = llm.create_chat_completion(
     messages=history,
@@ -103,7 +116,7 @@ def main():
     if any(word in text.lower() for word in ["exit", "quit", "終了","赤い魔法"]):
       print("終了します。")
       break
-
+    '''
     if any(word in text.lower() for word in ["出力","output"]):
       if any(word in text.lower() for word in ["出力a","output a"]):
         if any(word in text.lower() for word in ["オン","on"]):
@@ -118,9 +131,14 @@ def main():
           history.append({"role": "system", "content": "出力1が指定されましたが、状態の指定がありませんでした。"})
     else:
       history.append({"role": "system", "content": "出力先の指定がありませんでした。"})
-
+    '''
 
     response = chat_with_llama(text)
+
+    if response.startswith("/GPIO"):
+      result=command_parser(response)
+      response = chat_with_llama(result,"system")
+
     for line in re.split('[。\n]', response):
       if line != "":
         speack_ojtalk(line, voice=settings.VOICE)
