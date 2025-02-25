@@ -77,7 +77,6 @@ def transcribe_audio():
     print("これは表示されないはず")
     result = mic.listen()
 
-  #text = result["text"]
   print(">>>", result)
   return result
 
@@ -95,10 +94,10 @@ def chat_with_llama(text):
 def main():
   while True:
     text = transcribe_audio()
-    if text.lower() in ["exit", "quit", "終了"]:
+    if text.lower() in ["exit", "quit", "終了","赤い魔法"]:
       print("終了します。")
-      speack_ojtalk("終了します。", voice=settings.VOICE)
       break
+
     response = chat_with_llama(text)
     for line in response.splitlines():
       speack_ojtalk(line, voice=settings.VOICE)
