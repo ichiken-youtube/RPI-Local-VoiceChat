@@ -65,7 +65,7 @@ def speack_ojtalk(text, voice="f"):
   guruguru = ['/','-','\\']
   cnt = 0
   while process.poll() is None:
-    print("\r発話中...",guruguru[cnt%3])
+    print("\r発話中...",guruguru[cnt%3],end='')
     time.sleep(1)
     cnt+=1
 
