@@ -93,24 +93,28 @@ def chat_with_llama(text):
   return response
 
 def main():
-  pin_out = gpiozero.DigitalOutputDevice(pin=17)
+  pin_outA = gpiozero.DigitalOutputDevice(pin=20)
+  pin_outB = gpiozero.DigitalOutputDevice(pin=21)
   while True:
     text = transcribe_audio()
     if any(word in text.lower() for word in ["exit", "quit", "終了","赤い魔法"]):
       print("終了します。")
       break
 
-    if any(word in text.lower() for word in ["出力1","output1"]):
-      if any(word in text.lower() for word in ["オン","on"]):
-        pin_out.on()
-        print("GPIO1をONにしました。")
-        history.append({"role": "system", "content": "出力1をONにしました。"})
-      elif any(word in text.lower() for word in ["オフ","off"]):
-        pin_out.off()
-        print("GPIO1をOFFにしました。")
-        history.append({"role": "system", "content": "出力1をOFFにしました。"})
-      else:
-        history.append({"role": "system", "content": "出力1が指定されましたが、状態の指定がありませんでした。"})
+    if any(word in text.lower() for word in ["出力","output"]):
+      if any(word in text.lower() for word in ["出力1","output1"]):
+        if any(word in text.lower() for word in ["オン","on"]):
+          pin_outA.on()
+          print("GPIO1をONにしました。")
+          history.append({"role": "system", "content": "出力1をONにしました。"})
+        elif any(word in text.lower() for word in ["オフ","off"]):
+          pin_outA.off()
+          print("GPIO1をOFFにしました。")
+          history.append({"role": "system", "content": "出力1をOFFにしました。"})
+        else:
+          history.append({"role": "system", "content": "出力1が指定されましたが、状態の指定がありませんでした。"})
+    eles:
+      history.append({"role": "system", "content": "出力先の指定がありませんでした。"})
 
 
     response = chat_with_llama(text)
