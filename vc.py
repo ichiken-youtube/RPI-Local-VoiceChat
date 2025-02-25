@@ -6,10 +6,11 @@ import contextlib
 import subprocess
 import re
 import time
+import gpiozero
 
 llm = Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
 mic = WhisperMic(model="medium")
-history = [{"role": "system", "content": "あなたはRaspberry Piの上で動作してるスマートホームアシスタントです。GPIOを制御することができます。ユーザから要求があった場合は、制御を実行します。"}]
+history = [{"role": "system", "content": "あなたはRaspberry Piの上で動作してるスマートホームアシスタントです。GPIOを制御することができます。ユーザから要求があった場合は、制御を実行します。実行が完了したのち、システムあから返ってくるメッセージの内容によって、成功/不成功を報告してください。"}]
 
 @contextlib.contextmanager
 def suppress_output():
@@ -92,15 +93,29 @@ def chat_with_llama(text):
   return response
 
 def main():
+  pin_out = gpiozero.DigitalPinOutputDevice(pin=17)
   while True:
     text = transcribe_audio()
-    if text.lower() in ["exit", "quit", "終了","赤い魔法"]:
+    if ["exit", "quit", "終了","赤い魔法"] in text.lower():
       print("終了します。")
       break
 
+    if ["出力1","output1"] in text.lower():
+      if ["オン","on"] in text.lower():
+        pin_out.on()
+        print("GPIO1をONにしました。")
+        history.append({"role": "system", "content": "出力1をONにしました。"})
+      elif ["オフ","off"] in text.lower():
+        pin_out.off()
+        print("GPIO1をOFFにしました。")
+        history.append({"role": "system", "content": "出力1をOFFにしました。"})
+      else:
+        history.append({"role": "system", "content": "出力1が指定されましたが、状態の指定がありませんでした。"})
+
+
     response = chat_with_llama(text)
     for line in re.split('[。\n]', response):
-      if line != '':
+      if line != "":
         speack_ojtalk(line, voice=settings.VOICE)
     print("\r発話中...完了")
 
