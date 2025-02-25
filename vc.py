@@ -65,10 +65,10 @@ def speack_ojtalk(text, voice="f"):
   guruguru = ['/','-','\\']
   cnt = 0
   while process.poll() is None:
-    print("\r発話中...",guruguru[cnt%3],end='')
+    print("\r発話中...{%d}"%guruguru[cnt%3],end='')
     time.sleep(1)
     cnt+=1
-
+  print("\r発話中...完了")
 
 
 def transcribe_audio():
