@@ -105,7 +105,7 @@ def main():
         pin_out.on()
         print("GPIO1をONにしました。")
         history.append({"role": "system", "content": "出力1をONにしました。"})
-      elif ["オフ","off"] in text.lower():
+      elif any(word in text.lower() for word in ["オフ","off"]):
         pin_out.off()
         print("GPIO1をOFFにしました。")
         history.append({"role": "system", "content": "出力1をOFFにしました。"})
