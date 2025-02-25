@@ -42,9 +42,12 @@ def speack_ojtalk(text, voice="f"):
   if voice == "f":
     # 女性音声
     htsvoice = ['-m','/usr/share/hts-voice/mei/mei_normal.htsvoice']
+  elif voice == "miku":
+    htsvoice = ['-m','/usr/share/hts-voice/Miku/Miku-Type-b.htsvoice']
   else:
     # 男性音声
     htsvoice = ['-m','/usr/share/hts-voice/nitech-jp-atr503-m001/nitech_jp_atr503_m001.htsvoice']
+
   # 音声スピード
   speed = ['-r','1.0']
   outwav = ['-ow','test.wav']
@@ -53,7 +56,7 @@ def speack_ojtalk(text, voice="f"):
   c.stdin.write(text.encode('utf-8'))
   c.stdin.close()
   c.wait()
-  aplay = ['aplay','-q','test.wav','-Dhw:1,0']
+  aplay = ['aplay','-q','test.wav']
   wr = subprocess.Popen(aplay)
 
 
@@ -86,7 +89,7 @@ def main():
       print("終了します。")
       break
     response = chat_with_llama(text)
-    speack_ojtalk(response, voice="f")
+    speack_ojtalk(response, voice=settings.VOICE)
 
 if __name__ == "__main__":
   main()

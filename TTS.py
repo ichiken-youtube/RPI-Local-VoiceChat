@@ -1,3 +1,4 @@
+#https://nekonogorogoro.com/raspberrypi_openjtalk_python/
 import subprocess
 
 def speack_ojtalk(text, voice="f"):
@@ -17,7 +18,7 @@ def speack_ojtalk(text, voice="f"):
   c.stdin.write(text.encode('utf-8'))
   c.stdin.close()
   c.wait()
-  aplay = ['aplay','-q','test.wav']#,'-Dhw:0,0']
+  aplay = ['aplay','-q','test.wav']#,'-Dhw:0,0']デフォルトのデバイスから出力させる
   wr = subprocess.Popen(aplay)
 
 
