@@ -93,7 +93,7 @@ def chat_with_llama(text):
   return response
 
 def main():
-  pin_out = gpiozero.DigitalPinOutputDevice(pin=17)
+  pin_out = gpiozero.DigitalOutputDevice(pin=17)
   while True:
     text = transcribe_audio()
     if ["exit", "quit", "終了","赤い魔法"] in text.lower():
