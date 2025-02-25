@@ -98,6 +98,7 @@ def main():
     text = transcribe_audio()
     if text.lower() in ["exit", "quit", "終了"]:
       print("終了します。")
+      speack_ojtalk("終了します。", voice=settings.VOICE)
       break
     response = chat_with_llama(text)
     for line in response.splitlines():
