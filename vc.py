@@ -85,20 +85,22 @@ def command_parser(command):
   args=command.split(' ', 3)[:3]
   print(args)
   if args[0]=="/GPIO":
-    if args[1]==0:
-      if args[2]==0:
+    if args[1]=="0":
+      if args[2]=="0":
         pin_outA.off()
+        print("info:出力Aをオフにしました。")
         return "info:出力Aをオフにしました。"
-      elif args[2]==1:
+      elif args[2]=="1":
         pin_outA.on()
+        print("info:出力Aをオンにしました。")
         return "info:出力Aをオンにしました。"
       else:
         return "error:状態指定に不正があります。0,1以外の状態を指定してください。"
-    elif args[1]==1:
-      if args[2]==0:
+    elif args[1]=="1":
+      if args[2]=="0":
         pin_outB.off()
         return "info:出力Bをオフにしました。"
-      elif args[2]==1:
+      elif args[2]=="1":
         pin_outB.on()
         return "info:出力Bをオンにしました。"
       else:
@@ -157,7 +159,7 @@ def main():
 
     if response.startswith("/GPIO"):
       result=command_parser(response)
-      response = chat_with_llama(result,"system")
+      response = chat_with_llama(result,role="system")
 
     for line in re.split('[。\n]', response):
       if line != "":
