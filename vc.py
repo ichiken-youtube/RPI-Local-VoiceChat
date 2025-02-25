@@ -10,7 +10,12 @@ import gpiozero
 
 llm = Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
 mic = WhisperMic(model="medium")
-history = [{"role": "system", "content": "あなたはRaspberry Piの上で動作してるスマートホームアシスタントです。GPIOを制御することができます。ユーザから要求があった場合は、制御を実行します。実行が完了したのち、システムあから返ってくるメッセージの内容によって、成功/不成功を報告してください。"}]
+history = [{"role": "system", "content": "あなたはRaspberry Piの上で動作してるスマートホームアシスタントです。\
+            GPIOを制御することができます。ユーザから要求があった場合は、制御を実行します。\
+            実行が完了したのち、システムあから返ってくるメッセージの内容によって、成功/不成功を報告してください。"}]
+
+pin_outA = gpiozero.DigitalOutputDevice(pin=20)
+pin_outB = gpiozero.DigitalOutputDevice(pin=21)
 
 @contextlib.contextmanager
 def suppress_output():
@@ -93,8 +98,6 @@ def chat_with_llama(text):
   return response
 
 def main():
-  pin_outA = gpiozero.DigitalOutputDevice(pin=20)
-  pin_outB = gpiozero.DigitalOutputDevice(pin=21)
   while True:
     text = transcribe_audio()
     if any(word in text.lower() for word in ["exit", "quit", "終了","赤い魔法"]):
@@ -102,7 +105,7 @@ def main():
       break
 
     if any(word in text.lower() for word in ["出力","output"]):
-      if any(word in text.lower() for word in ["出力1","output1"]):
+      if any(word in text.lower() for word in ["出力a","output a"]):
         if any(word in text.lower() for word in ["オン","on"]):
           pin_outA.on()
           print("GPIO1をONにしました。")
