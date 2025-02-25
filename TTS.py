@@ -17,13 +17,13 @@ def speack_ojtalk(text, voice="f"):
   c.stdin.write(text.encode('utf-8'))
   c.stdin.close()
   c.wait()
-  aplay = ['aplay','-q','test.wav','-Dhw:1,0']
+  aplay = ['aplay','-q','test.wav']#,'-Dhw:0,0']
   wr = subprocess.Popen(aplay)
 
 
 def main():
   # 読み上げてほしい文章を入力
-  text = "ラバかロバかロバかラバか分からないので ラバとロバを比べたらロバかラバか分からなかった"
+  text = "隣の客はよく柿食う客だ"
   # voice=に男性か女性の音声を指定する
   speack_ojtalk(text, voice="f")
 
