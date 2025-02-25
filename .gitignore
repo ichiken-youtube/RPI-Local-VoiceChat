@@ -1,2 +1,4 @@
 venv/
 settings.py
+*.wav
+__pycache__/
