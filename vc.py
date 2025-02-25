@@ -100,8 +100,8 @@ def main():
       print("終了します。")
       break
 
-    if ["出力1","output1"] in text.lower():
-      if ["オン","on"] in text.lower():
+    if any(word in text.lower() for word in ["出力1","output1"]):
+      if any(word in text.lower() for word in ["オン","on"]):
         pin_out.on()
         print("GPIO1をONにしました。")
         history.append({"role": "system", "content": "出力1をONにしました。"})
