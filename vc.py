@@ -43,6 +43,8 @@ def speack_ojtalk(text, voice="f"):
     # 女性音声
     htsvoice = ['-m','/usr/share/hts-voice/mei/mei_normal.htsvoice']
   elif voice == "miku":
+    #初音ミクボイス
+    #https://karaage.hatenadiary.jp/entry/2016/07/22/073000
     htsvoice = ['-m','/usr/share/hts-voice/Miku/Miku-Type-b.htsvoice']
   else:
     # 男性音声
