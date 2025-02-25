@@ -96,7 +96,7 @@ def main():
   pin_out = gpiozero.DigitalOutputDevice(pin=17)
   while True:
     text = transcribe_audio()
-    if ["exit", "quit", "終了","赤い魔法"] in text.lower():
+    if any(word in text.lower() for word in ["exit", "quit", "終了","赤い魔法"]):
       print("終了します。")
       break
 
