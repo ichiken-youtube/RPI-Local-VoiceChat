@@ -99,7 +99,7 @@ def main():
       break
 
     response = chat_with_llama(text)
-    for line in response.splitlines():
+    for line in re.split('[。\n]', response):
       speack_ojtalk(line, voice=settings.VOICE)
     print("\r発話中...完了")
 
