@@ -113,7 +113,7 @@ def main():
           history.append({"role": "system", "content": "出力1をOFFにしました。"})
         else:
           history.append({"role": "system", "content": "出力1が指定されましたが、状態の指定がありませんでした。"})
-    eles:
+    else:
       history.append({"role": "system", "content": "出力先の指定がありませんでした。"})
 
 
