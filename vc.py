@@ -140,23 +140,7 @@ def main():
     if any(word in text.lower() for word in ["exit", "quit", "終了","赤い魔法"]):
       print("終了します。")
       break
-    '''
-    if any(word in text.lower() for word in ["出力","output"]):
-      if any(word in text.lower() for word in ["出力a","output a"]):
-        if any(word in text.lower() for word in ["オン","on"]):
-          pin_outA.on()
-          print("GPIO1をONにしました。")
-          history.append({"role": "system", "content": "出力1をONにしました。"})
-        elif any(word in text.lower() for word in ["オフ","off"]):
-          pin_outA.off()
-          print("GPIO1をOFFにしました。")
-          history.append({"role": "system", "content": "出力1をOFFにしました。"})
-        else:
-          history.append({"role": "system", "content": "出力1が指定されましたが、状態の指定がありませんでした。"})
-    else:
-      history.append({"role": "system", "content": "出力先の指定がありませんでした。"})
-    '''
-
+    
     response = chat_with_llama(text)
 
     if response.startswith("/GPIO"):
