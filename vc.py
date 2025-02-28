@@ -7,6 +7,7 @@ import subprocess
 import re
 import time
 import gpiozero
+import tc
 
 llm = Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
 mic = WhisperMic(model="small")
@@ -123,17 +124,6 @@ def transcribe_audio():
   print(">>>", result)
   return result
 
-def chat_with_llama(text,role='user'):
-  history.append({"role": "user", "content": text})
-  output = llm.create_chat_completion(
-    messages=history,
-    max_tokens=512
-  )
-  response = output["choices"][0]["message"]["content"]
-  history.append({"role": "assistant", "content": response})
-  print(response)
-  return response
-
 def main():
   while True:
     text = transcribe_audio()
@@ -141,11 +131,11 @@ def main():
       print("終了します。")
       break
     
-    response = chat_with_llama(text)
+    response = tc.chat_with_llama(text)
 
     if response.startswith("/GPIO"):
       result=command_parser(response)
-      response = chat_with_llama(result,role="system")
+      response = tc.chat_with_llama(result,role="system")
 
     for line in re.split('[。\n]', response):
       if line != "":

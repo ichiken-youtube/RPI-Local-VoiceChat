@@ -9,7 +9,7 @@ def chat_with_llama(text,role='user'):
   history.append({"role": "user", "content": text})
   output = llm.create_chat_completion(
     messages=history,
-    max_tokens=512
+    max_tokens=1024
   )
   response = output["choices"][0]["message"]["content"]
   history.append({"role": "assistant", "content": response})
