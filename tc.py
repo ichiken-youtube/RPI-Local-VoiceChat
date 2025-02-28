@@ -5,7 +5,7 @@ import settings
 llm=Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
 
 def chat_with_llama(text,history,role='user'):
-  history.append({"role": "user", "content": text})
+  history.append({"role": role, "content": text})
   output = llm.create_chat_completion(
     messages=history,
     max_tokens=1024

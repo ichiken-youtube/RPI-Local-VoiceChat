@@ -136,6 +136,7 @@ def main():
       if line.startswith("/GPIO"):
         result=command_parser(response)
         response = tc.chat_with_llama(result,history,role="system")
+        break
 
     for line in re.split('[。\n]', response):
       if line != "":
