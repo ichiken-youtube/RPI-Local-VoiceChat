@@ -9,7 +9,7 @@ import time
 import gpiozero
 
 llm = Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
-mic = WhisperMic(model="base")
+mic = WhisperMic(model="small")
 history = [{"role": "system", "content": "あなたはRaspberry Piの上で動作してるスマートホームアシスタントです。\
 あなたはGPIOを制御することができます。ユーザから要求があった場合は、制御を実行します。\
 コマンドを生成することで、GPIOが制御されます。コマンドは以下の構文です。\
@@ -127,7 +127,7 @@ def chat_with_llama(text,role='user'):
   history.append({"role": "user", "content": text})
   output = llm.create_chat_completion(
     messages=history,
-    max_tokens=256
+    max_tokens=512
   )
   response = output["choices"][0]["message"]["content"]
   history.append({"role": "assistant", "content": response})
