@@ -9,7 +9,6 @@ import time
 import gpiozero
 import tc
 
-model = Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
 mic = WhisperMic(model="small")
 history = [{"role": "system", "content": "あなたはRaspberry Piの上で動作してるスマートホームアシスタントです。\
 あなたはGPIOを制御することができます。ユーザから要求があった場合は、制御を実行します。\
@@ -133,9 +132,10 @@ def main():
     
     response = tc.chat_with_llama(text,history)
 
-    if response.startswith("/GPIO"):
-      result=command_parser(response)
-      response = tc.chat_with_llama(result,history,role="system")
+    for line  in response:
+      if line.startswith("/GPIO"):
+        result=command_parser(response)
+        response = tc.chat_with_llama(result,history,role="system")
 
     for line in re.split('[。\n]', response):
       if line != "":
