@@ -131,11 +131,11 @@ def main():
       print("終了します。")
       break
     
-    response = tc.chat_with_llama(text,llm=model)
+    response = tc.chat_with_llama(text,history)
 
     if response.startswith("/GPIO"):
       result=command_parser(response)
-      response = tc.chat_with_llama(result,llm=model,role="system")
+      response = tc.chat_with_llama(result,history,role="system")
 
     for line in re.split('[。\n]', response):
       if line != "":
