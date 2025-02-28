@@ -2,10 +2,9 @@
 from llama_cpp import Llama
 import settings
 
-llm = Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
 history = [{"role": "system", "content": settings.SYSTEM_PROMPT}]
 
-def chat_with_llama(text,role='user'):
+def chat_with_llama(text,llm,role='user'):
   history.append({"role": "user", "content": text})
   output = llm.create_chat_completion(
     messages=history,
@@ -16,15 +15,15 @@ def chat_with_llama(text,role='user'):
   print(response)
   return response
 
-def main():
+def main(model):
   while True:
     print("\nテキストを入力してください。")
     text = input()
     if text.startswith("/quit"):
       print("終了します。")
       break
-    response = chat_with_llama(text)
+    response = chat_with_llama(text,model)
 
 if __name__ == "__main__":
-  main()
+  main(Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True))
   exit(0)
