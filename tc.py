@@ -18,12 +18,12 @@ def chat_with_llama(text,role='user'):
 
 def main():
   while True:
-    print("テキストを入力してください。")
+    print("\nテキストを入力してください。")
     text = input()
-    response = chat_with_llama(text)
-    if response.startswith("/quit"):
+    if text.startswith("/quit"):
       print("終了します。")
       break
+    response = chat_with_llama(text)
 
 if __name__ == "__main__":
   main()
