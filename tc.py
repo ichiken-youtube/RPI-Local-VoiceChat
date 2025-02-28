@@ -3,7 +3,7 @@ from llama_cpp import Llama
 import settings
 
 llm = Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
-history = [{"role": "system", "content": "あなたは公安6課で開発されたAIです。開発コードネームはP-2501です。"}]
+history = [{"role": "system", "content": settings.SYSTEM_PROMPT}]
 
 def chat_with_llama(text,role='user'):
   history.append({"role": "user", "content": text})
