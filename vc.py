@@ -132,9 +132,9 @@ def main():
     
     response = tc.chat_with_llama(text,history)
 
-    for line  in response:
+    for line  in response.splitlines():
       if line.startswith("/GPIO"):
-        result=command_parser(response)
+        result=command_parser(line)
         response = tc.chat_with_llama(result,history,role="system")
         break
 
