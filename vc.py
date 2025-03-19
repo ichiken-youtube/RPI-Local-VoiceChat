@@ -86,7 +86,7 @@ def speack_ojtalk(text, voice="f"):
 def command_parser(command):
   args=command.split(' ', 3)[:3]
   print(args)
-  if args[0]=="/GPIO":
+  if args[0]=="/GPIO" or args[0]=="/gpio":
     if args[1]=="0":
       if args[2]=="0":
         pin_outA.off()
@@ -133,7 +133,7 @@ def main():
     response = tc.chat_with_llama(text,history)
 
     for line  in response.splitlines():
-      if line.startswith("/GPIO"):
+      if line.lower().startswith("/gpio"):
         result=command_parser(line)
         response = tc.chat_with_llama(result,history,role="system")
         break
