@@ -2,7 +2,7 @@
 from llama_cpp import Llama
 import settings
 
-llm=Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True)
+llm=Llama(settings.MODEL_PATH, n_gpu_layers=settings.NGL, use_vulkan=True, n_threads=4)
 
 def chat_with_llama(text,history,role='user'):
   history.append({"role": role, "content": text})
