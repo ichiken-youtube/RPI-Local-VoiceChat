@@ -9,9 +9,17 @@ import time
 import gpiozero
 import tc
 
+try:
+  SMART_HOME = settings.SMART_HOME
+except:
+  SMART_HOME = False
+
 mic = WhisperMic(model="small")
 #mic = WhisperMic(model="base")
-history = [{"role": "system", "content": "あなたはRaspberry Piの上で動作してるスマートホームアシスタントです。\
+history = []
+
+if SMART_HOME:
+  history.append({"role": "system", "content": "あなたはRaspberry Piの上で動作してるスマートホームアシスタントです。\
 あなたはGPIO出力によって家の1階と2階の照明を制御することができます。ユーザから照明に関する要求があった場合は、ユーザの要求を達成するために制御を実行します。\
 コマンドを生成することで、GPIOが制御されます。コマンドは以下の構文です。\
 /GPIO \{出力番号\} \{状態\}\
@@ -19,7 +27,9 @@ history = [{"role": "system", "content": "あなたはRaspberry Piの上で動�
 音声認識の都合上、文字が誤認される場合がありますが、コマンドを解釈するうえで読みが似ている場合、また、意味が近い語は同一と解釈してください。\
 状態は0,1のみ入力可能です。0がオフ、1がオンです。\
 操作をする場合は、コマンドのみを生成して他の文は生成しないでください。\
-実行が完了したのち、システムから返ってくるメッセージの内容を判断して、成功/不成功を日本語の文章として報告してください。"}]
+実行が完了したのち、システムから返ってくるメッセージの内容を判断して、成功/不成功を日本語の文章として報告してください。"})
+else:
+  history.append({"role": "system", "content": settings.SYSTEM_PROMPT})
 
 pin_outA = gpiozero.DigitalOutputDevice(pin=20)
 pin_outB = gpiozero.DigitalOutputDevice(pin=21)
