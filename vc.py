@@ -10,6 +10,7 @@ import gpiozero
 import tc
 
 mic = WhisperMic(model="small")
+#mic = WhisperMic(model="base")
 history = [{"role": "system", "content": "あなたはRaspberry Piの上で動作してるスマートホームアシスタントです。\
 あなたはGPIO出力によって家の1階と2階の照明を制御することができます。ユーザから照明に関する要求があった場合は、ユーザの要求を達成するために制御を実行します。\
 コマンドを生成することで、GPIOが制御されます。コマンドは以下の構文です。\
