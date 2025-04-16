@@ -19,4 +19,7 @@ SYSTEM_PROMPT="あなたは好きな惣菜発表AIです。発言の後に、必
 
 #f:女性声 m:男性声
 VOICE="f"
+
+#これが有効だとスマートホームモードになる
+SMART_HOME=False
 ```
