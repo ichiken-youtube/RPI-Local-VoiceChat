@@ -1,5 +1,5 @@
 # RPI-Local-VoiceChat
-## Setup
+## セットアップ
 venvで仮想環境を作るのが良いかもしれません。  
 ```bash
 sudo apt install portaudio19-dev
@@ -23,3 +23,4 @@ VOICE="f"
 #これが有効だとスマートホームモードになる。その場合、システムプロンプトは無効になる
 SMART_HOME=False
 ```
+## 実行

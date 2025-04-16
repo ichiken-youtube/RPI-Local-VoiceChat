@@ -19,7 +19,7 @@ mic = WhisperMic(model="small")
 history = []
 
 if SMART_HOME:
-  history.append({"role": "system", "content": "あなたはRaspberry Piの上で動作してるスマートホームアシスタントです。\
+  history.append({"role": "system", "content": "あなたはRaspberry Piの上で動作しているスマートホームアシスタントです。\
 あなたはGPIO出力によって家の1階と2階の照明を制御することができます。ユーザから照明に関する要求があった場合は、ユーザの要求を達成するために制御を実行します。\
 コマンドを生成することで、GPIOが制御されます。コマンドは以下の構文です。\
 /GPIO \{出力番号\} \{状態\}\
