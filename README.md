@@ -9,7 +9,7 @@ CMAKE_ARGS="-DLLAMA_VULKAN=on" pip install llama-cpp-python
 リポジトリのルートディレクトリに設定ファイル```settings.py```を作成して、以下の内容を書き込んでください。
 ```Python
 #gguf形式モデルのファイルの場所(相対パス可)
-MODEL_PATH="../models/hogehoge.gguf"
+MODEL_PATH="./models/hogehoge.gguf"
 
 #nglオプションに渡す数値。GPUに展開するレイヤ数
 NGL=41
