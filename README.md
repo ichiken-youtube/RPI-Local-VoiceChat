@@ -38,5 +38,5 @@ settings.pyに、```SMART_HOME=True```の設定を書き込んでください。
 LEDをそれぞれGPIO20,21に接続してください。
 ## 実行
 ```bash
-(venv)$ pythono vc.py
+(venv)$ python vc.py
 ```
