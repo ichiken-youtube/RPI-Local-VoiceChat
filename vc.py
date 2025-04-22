@@ -14,8 +14,8 @@ try:
 except:
   SMART_HOME = False
 
-mic = WhisperMic(model="small")
-#mic = WhisperMic(model="base")
+#mic = WhisperMic(model="small")
+mic = WhisperMic(model="base")
 history = []
 
 if SMART_HOME:
